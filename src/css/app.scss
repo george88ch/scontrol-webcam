@@ -1,0 +1,18 @@
+// app global css in SCSS form
+:root {
+  --becc-radius: 12px;
+  --becc-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+body {
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.rounded-card {
+  border-radius: var(--becc-radius);
+  box-shadow: var(--becc-shadow);
+}
+
+h2 {
+  font-weight: 500;
+  font-size: medium;
+  margin-bottom: 16px;
+}
