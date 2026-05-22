@@ -1,23 +1,25 @@
 {
-  "name": "quasar-framework-v2",
+  "name": "scontrol-webcam",
   "version": "0.0.1",
-  "description": "Framework for Quasar Apps",
-  "productName": "Quasar Framework",
-  "author": "george <george88ch@gmail.com>",
+  "description": "SControl Webcam application",
+  "productName": "SControl Webcam",
   "type": "module",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev",
     "build": "quasar build",
+    "deploy:database-rules": "firebase deploy --only database",
+    "deploy:firestore-rules": "firebase deploy --only firestore:rules",
     "postinstall": "quasar prepare"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.35",
     "@quasar/extras": "^1.16.4",
+    "@tensorflow/tfjs": "^3.21.0",
+    "face-api.js": "^0.22.2",
     "firebase": "^12.6.0",
-    "openai": "^6.9.1",
     "quasar": "^2.16.0",
-    "uuid": "^13.0.0",
     "vue": "^3.4.18",
     "vue-i18n": "^11.0.0",
     "vue-router": "^4.0.0"

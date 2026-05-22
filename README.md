@@ -1,143 +1,49 @@
-# Quasar Framework (quasar-framework-v2)
+# SControl Webcam
 
-Framework for Quasar Apps
+Quasar 2 / Vue 3 application scaffold with Firebase authentication, Firestore,
+Storage, route guards, and a metadata-driven drawer menu.
 
-## Install the dependencies
+## Install
 
 ```bash
-yarn
-# or
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+## Develop
 
 ```bash
-quasar dev
+npm run dev
 ```
 
-### Build the app for production
+## Build
 
 ```bash
-quasar build
+npm run build
 ```
 
-### Customize the configuration
+## Environment
 
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+Create a local `.env` file with the Firebase project values used by
+[src/boot/firebase.js](src/boot/firebase.js):
 
-# Meta-Felder für Route-Definitionen
-
-## Übersicht
-
-| Feld           | Typ                  | Beschreibung                            |
-| -------------- | -------------------- | --------------------------------------- |
-| `menu`         | `boolean`            | Route im Menü anzeigen                  |
-| `label`        | `string`             | Anzeigename                             |
-| `icon`         | `string`             | Material Icon Name                      |
-| `order`        | `number`             | Sortierung (kleiner = weiter oben)      |
-| `requiresAuth` | `boolean`            | Nur für eingeloggte User sichtbar       |
-| `hideWhenAuth` | `boolean`            | Verstecken wenn eingeloggt (z.B. Login) |
-| `requiredRole` | `string \| string[]` | Benötigte Rolle(n)                      |
-
-## Beispiele
-
-### Öffentliche Route
-
-```javascript
-{
-  path: "/about",
-  name: "about",
-  component: () => import("pages/AboutPage.vue"),
-  meta: {
-    menu: true,
-    label: "Über uns",
-    icon: "info",
-    order: 2
-  }
-}
+```bash
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_DATABASE_URL=
+VITE_OPENAI_API_KEY=
 ```
 
-### Geschützte Route (nur eingeloggt)
+## Routes
 
-```javascript
-{
-  path: "/dashboard",
-  name: "dashboard",
-  component: () => import("pages/DashboardPage.vue"),
-  meta: {
-    menu: true,
-    label: "Dashboard",
-    icon: "dashboard",
-    order: 10,
-    requiresAuth: true
-  }
-}
-```
+Routes can opt into the drawer and auth guard through `meta` fields:
 
-### Route mit Rollen-Check
-
-```javascript
-{
-  path: "/admin",
-  name: "admin",
-  component: () => import("pages/AdminPage.vue"),
-  meta: {
-    menu: true,
-    label: "Administration",
-    icon: "admin_panel_settings",
-    order: 50,
-    requiresAuth: true,
-    requiredRole: "admin"
-  }
-}
-```
-
-### Route mit mehreren erlaubten Rollen
-
-```javascript
-{
-  path: "/reports",
-  name: "reports",
-  component: () => import("pages/ReportsPage.vue"),
-  meta: {
-    menu: true,
-    label: "Berichte",
-    icon: "assessment",
-    order: 20,
-    requiresAuth: true,
-    requiredRole: ["admin", "manager"]
-  }
-}
-```
-
-### Verstecken wenn eingeloggt
-
-```javascript
-{
-  path: "/login",
-  name: "login",
-  component: () => import("pages/LoginPage.vue"),
-  meta: {
-    menu: true,
-    label: "Login",
-    icon: "login",
-    order: 100,
-    hideWhenAuth: true
-  }
-}
-```
-
-### Route ohne Menu-Eintrag
-
-```javascript
-{
-  path: "/settings/profile",
-  name: "profile-settings",
-  component: () => import("pages/ProfileSettingsPage.vue"),
-  meta: {
-    requiresAuth: true
-    // kein menu: true = nicht im Drawer sichtbar
-  }
-}
-```
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `menu` | `boolean` | Show route in the drawer |
+| `label` | `string` | Drawer label |
+| `icon` | `string` | Material icon name |
+| `order` | `number` | Drawer sort order |
+| `requiresAuth` | `boolean` | Require a logged-in user |
+| `hideWhenAuth` | `boolean` | Hide route from logged-in users |
+| `requiredRole` | `string \| string[]` | Require one or more profile roles |

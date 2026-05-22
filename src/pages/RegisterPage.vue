@@ -6,20 +6,20 @@
       <q-input
         filled
         v-model="pw"
-        label="Passwort"
+        label="Password"
         type="password"
         class="q-mb-sm"
       />
       <q-input
         filled
         v-model="pw2"
-        label="Passwort wiederholen"
+        label="Repeat password"
         type="password"
         class="q-mb-md"
       />
       <q-btn
         color="primary"
-        label="Account erstellen"
+        label="Create account"
         class="full-width"
         unelevated
         @click="onRegister"

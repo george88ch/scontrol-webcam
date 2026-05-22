@@ -6,7 +6,7 @@
       <q-input
         filled
         v-model="pw"
-        label="Passwort"
+        label="Password"
         type="password"
         class="q-mb-md"
       />
@@ -20,7 +20,7 @@
       <q-btn
         flat
         dense
-        label="Passwort vergessen?"
+        label="Forgot password?"
         class="full-width text-caption"
         @click="onResetPassword"
       />

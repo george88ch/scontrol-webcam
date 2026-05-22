@@ -1,5 +1,6 @@
 // src/boot/firebase.js
 import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 import {
   getAuth,
   onAuthStateChanged,
@@ -25,25 +26,19 @@ import {
   deleteObject,
 } from "firebase/storage";
 
-/*
-   firebase config
-*/
-
 const firebaseConfig = {
   apiKey: process.env.VITE_FIREBASE_API_KEY,
   projectId: process.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET,
+  databaseURL: process.env.VITE_FIREBASE_DATABASE_URL,
 };
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = getFirestore(app, "webcam");
 export const storage = getStorage(app);
+export const rtdb = getDatabase(app);
 
-/*
-   Firebase APIs
-*/
-// Auth API
 export const login = async (email, pw) => {
   return signInWithEmailAndPassword(auth, email, pw);
 };
@@ -63,7 +58,6 @@ export const onAuthChange = (cb) => {
   return onAuthStateChanged(auth, cb);
 };
 
-// Firestore API
 export const read = async (path) => {
   const d = doc(db, path);
   const snap = await getDoc(d);
@@ -84,8 +78,6 @@ export const addMember = (sessionPath, memberId) => {
   return updateDoc(d, { members: arrayUnion(memberId) });
 };
 
-// Storage API
-
 export const upload = async (path, file) => {
   const r = ref(storage, path);
   await uploadBytes(r, file);
@@ -102,7 +94,3 @@ export const deleteFile = (path) => {
 export const userImagePath = (uid, filename) => {
   return `users/${uid}/images/${filename}`;
 };
-
-/*
-   Helper
-*/

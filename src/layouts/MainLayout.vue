@@ -10,7 +10,7 @@
           @click="drawer = !drawer"
           class="q-mr-sm"
         />
-        <div class="text-h6">BECC Framework</div>
+        <div class="text-h6">SControl Webcam</div>
         <q-space />
         <q-btn v-if="!isAuthenticated" to="/login">Login/Register</q-btn>
       </q-toolbar>
@@ -27,8 +27,7 @@
 
     <q-footer bordered class="bg-white text-dark">
       <div class="row items-center justify-between">
-        <div>BECC Framework Starter</div>
-        <div class="text-caption">&copy;george88ch@gmail.com</div>
+        <div>SControl Webcam</div>
       </div>
     </q-footer>
   </q-layout>

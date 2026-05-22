@@ -194,7 +194,7 @@ export default defineConfig((ctx) => {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "quasar-framework-v2",
+        appId: "scontrol-webcam",
       },
     },
 

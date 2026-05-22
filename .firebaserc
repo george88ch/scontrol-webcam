@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "scontrol-v1-ec889"
+  },
+  "targets": {
+    "scontrol-v1-ec889": {
+      "hosting": {
+        "scontrol-webcam": [
+          "scontrol-webcam"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

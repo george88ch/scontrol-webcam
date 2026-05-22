@@ -4,13 +4,17 @@ import { auth, db } from "src/boot/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 
-// Singleton State (ausserhalb der Funktion = geteilt)
+// Singleton state shared by all composable callers.
 const authState = ref("initializing");
 const user = ref(null);
 const profile = ref(null);
 
 let profileUnsubscribe = null;
 let initialized = false;
+
+function isPermissionDenied(error) {
+  return error?.code === "permission-denied";
+}
 
 function cleanup() {
   if (profileUnsubscribe) {
@@ -37,9 +41,18 @@ function subscribeToProfile(uid) {
         }
       },
       (error) => {
+        if (isPermissionDenied(error)) {
+          profile.value = null;
+          if (initialLoad) {
+            initialLoad = false;
+            resolve(null);
+          }
+          return;
+        }
+
         console.error("Profile listener error:", error);
         if (initialLoad) reject(error);
-      }
+      },
     );
   });
 }
@@ -59,7 +72,9 @@ function initAuth() {
           await subscribeToProfile(firebaseUser.uid);
           authState.value = "authenticated";
         } catch (error) {
-          console.error("Failed to load profile:", error);
+          if (!isPermissionDenied(error)) {
+            console.error("Failed to load profile:", error);
+          }
           authState.value = "authenticated";
         }
       } else {
@@ -74,24 +89,19 @@ function initAuth() {
 
 async function logout() {
   await signOut(auth);
-  // cleanup passiert automatisch via onAuthStateChanged
 }
 
-// Das eigentliche Composable
 export function useAuth() {
   return {
-    // Readonly um versehentliche Mutations zu verhindern
     authState: readonly(authState),
     user: readonly(user),
     profile: readonly(profile),
 
-    // Computed
     isReady: computed(() => authState.value !== "initializing"),
     isAuthenticated: computed(() => authState.value === "authenticated"),
     userRole: computed(() => profile.value?.role ?? null),
     uid: computed(() => user.value?.uid ?? null),
 
-    // Actions
     initAuth,
     logout,
   };

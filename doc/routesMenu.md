@@ -1,38 +1,18 @@
-# Meta-Felder für Route-Definitionen
+# Route Menu Metadata
 
-## Übersicht
+The drawer menu is generated from Vue Router records with `meta.menu`.
 
-| Feld           | Typ                  | Beschreibung                            |
-| -------------- | -------------------- | --------------------------------------- |
-| `menu`         | `boolean`            | Route im Menü anzeigen                  |
-| `label`        | `string`             | Anzeigename                             |
-| `icon`         | `string`             | Material Icon Name                      |
-| `order`        | `number`             | Sortierung (kleiner = weiter oben)      |
-| `requiresAuth` | `boolean`            | Nur für eingeloggte User sichtbar       |
-| `hideWhenAuth` | `boolean`            | Verstecken wenn eingeloggt (z.B. Login) |
-| `requiredRole` | `string \| string[]` | Benötigte Rolle(n)                      |
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `menu` | `boolean` | Show route in the drawer |
+| `label` | `string` | Drawer label |
+| `icon` | `string` | Material icon name |
+| `order` | `number` | Drawer sort order |
+| `requiresAuth` | `boolean` | Require a logged-in user |
+| `hideWhenAuth` | `boolean` | Hide route from logged-in users |
+| `requiredRole` | `string \| string[]` | Require one or more profile roles |
 
-## Beispiele
-
-### Öffentliche Route
-
-```javascript
-{
-  path: "/about",
-  name: "about",
-  component: () => import("pages/AboutPage.vue"),
-  meta: {
-    menu: true,
-    label: "Über uns",
-    icon: "info",
-    order: 2
-  }
-}
-```
-
-### Geschützte Route (nur eingeloggt)
-
-```javascript
+```js
 {
   path: "/dashboard",
   name: "dashboard",
@@ -42,74 +22,7 @@
     label: "Dashboard",
     icon: "dashboard",
     order: 10,
-    requiresAuth: true
-  }
-}
-```
-
-### Route mit Rollen-Check
-
-```javascript
-{
-  path: "/admin",
-  name: "admin",
-  component: () => import("pages/AdminPage.vue"),
-  meta: {
-    menu: true,
-    label: "Administration",
-    icon: "admin_panel_settings",
-    order: 50,
     requiresAuth: true,
-    requiredRole: "admin"
-  }
-}
-```
-
-### Route mit mehreren erlaubten Rollen
-
-```javascript
-{
-  path: "/reports",
-  name: "reports",
-  component: () => import("pages/ReportsPage.vue"),
-  meta: {
-    menu: true,
-    label: "Berichte",
-    icon: "assessment",
-    order: 20,
-    requiresAuth: true,
-    requiredRole: ["admin", "manager"]
-  }
-}
-```
-
-### Verstecken wenn eingeloggt
-
-```javascript
-{
-  path: "/login",
-  name: "login",
-  component: () => import("pages/LoginPage.vue"),
-  meta: {
-    menu: true,
-    label: "Login",
-    icon: "login",
-    order: 100,
-    hideWhenAuth: true
-  }
-}
-```
-
-### Route ohne Menu-Eintrag
-
-```javascript
-{
-  path: "/settings/profile",
-  name: "profile-settings",
-  component: () => import("pages/ProfileSettingsPage.vue"),
-  meta: {
-    requiresAuth: true
-    // kein menu: true = nicht im Drawer sichtbar
-  }
+  },
 }
 ```

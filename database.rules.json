@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "cams": {
+      "$uid": {
+        ".read": "auth != null",
+        "$camType": {
+          ".write": "auth != null",
+          ".validate": "$camType.matches(/^(face|body|room)$/) && newData.hasChildren(['online', 'updatedAt'])"
+        }
+      }
+    },
+    "estimQueues": {
+      "$queueId": {
+        ".read": "auth != null && $queueId === 'estim_' + auth.uid",
+        ".write": "auth != null && $queueId === 'estim_' + auth.uid",
+        "worker": {
+          ".write": "auth != null && $queueId === 'estim_' + auth.uid"
+        },
+        "commands": {
+          ".write": "auth != null && $queueId === 'estim_' + auth.uid",
+          "$commandId": {
+            ".write": "auth != null && $queueId === 'estim_' + auth.uid"
+          }
+        }
+      }
+    }
+  }
+}

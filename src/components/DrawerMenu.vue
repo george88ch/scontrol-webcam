@@ -72,7 +72,7 @@ async function handleLogout() {
         <q-item-section avatar>
           <q-icon name="logout" />
         </q-item-section>
-        <q-item-section> Abmelden </q-item-section>
+        <q-item-section> Sign out </q-item-section>
       </q-item>
     </template>
   </q-list>
